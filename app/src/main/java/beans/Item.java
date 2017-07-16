@@ -18,6 +18,7 @@ public class Item extends BaseBeenImp implements Serializable,BaseBeen {
     public Item(List<Products> items) {
         System.out.println("Hi ");
         this.items = items;
+        System.out.println("uhugas");
     }
 
     public List<Products> getItems() {
@@ -25,6 +26,7 @@ public class Item extends BaseBeenImp implements Serializable,BaseBeen {
     }
 
     public void setItems(List<Products> items) {
+
 
         System.out.println("HI");
         this.items = items;

@@ -1,5 +1,7 @@
 package presenters;
 
+import com.example.mahmoudsamy.pretask.views.UserDetails;
+
 import beans.Item;
 
 /**
@@ -11,6 +13,7 @@ public interface UserDetailsPresenter extends BasePresenter {
     void setUi();
     void setItems(Item items);
     void getItems(String token);
+    void attach(UserDetails userDetails);
 
 
 

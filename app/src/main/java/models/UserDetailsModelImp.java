@@ -7,10 +7,13 @@ import com.android.volley.Request;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import beans.BaseBeen;
 import beans.BaseBeenImp;
 import beans.Item;
 import beans.RequestUrl;
+import presenters.LogInPresenter;
 import presenters.UserDetailsPresenter;
 
 /**
@@ -21,11 +24,12 @@ public class UserDetailsModelImp implements UserDetailsModel {
 
 
     UserDetailsPresenter userDetailsPresenter;
+    @Inject
     RequestManager requestManager;
+    @Inject
+    public UserDetailsModelImp() {
 
-    public UserDetailsModelImp(UserDetailsPresenter userDetailsPresenter) {
-        this.userDetailsPresenter = userDetailsPresenter;
-        this.requestManager=new RequestManagerImp(this);
+       // this.requestManager=new RequestManagerImp();
     }
 
     @Override
@@ -35,8 +39,9 @@ public class UserDetailsModelImp implements UserDetailsModel {
     }
 
     @Override
-    public void getProductsFromNetwork(String token, Context presenterContext) {
+    public void getProductsFromNetwork(String token, Context presenterContext,UserDetailsPresenter userDetailsPresenter) {
 
+        this.userDetailsPresenter = userDetailsPresenter;
         Map<String,String> jsonParams = new HashMap<>();
         jsonParams.put("token",token);
         String link="products";
@@ -44,12 +49,12 @@ public class UserDetailsModelImp implements UserDetailsModel {
         RequestUrl requestUrl=new RequestUrl();
         requestUrl.setPath(uri);
         requestUrl.setParams(jsonParams);
-        requestManager.makeHttpRequest(requestUrl);
+        requestManager.makeHttpRequest(requestUrl,this);
 
     }
 
     @Override
-    public void onSuccessFromNetWork(BaseBeen items) {
+    public void onSuccessFromNetWork(BaseBeenImp items) {
         userDetailsPresenter.setItems((Item) items);
 
     }

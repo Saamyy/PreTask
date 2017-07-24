@@ -3,6 +3,8 @@ package models;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import beans.BaseBeen;
 import beans.BaseBeenImp;
 import beans.RequestUrl;
@@ -15,16 +17,17 @@ import presenters.LogInPresenter;
 
 public class LogInModelImp  implements LogInModel{
     LogInPresenter logInPresenter;
+    @Inject
     RequestManager requestManager;
-
-    public  LogInModelImp(LogInPresenter logInPresenter)
+    @Inject
+    public  LogInModelImp()
     {
-        this.logInPresenter=logInPresenter;
-        this.requestManager=new RequestManagerImp(this);
+
     }
 
     @Override
-    public void logIn(String msisdn, String password) {
+    public void logIn(String msisdn, String password,LogInPresenter logInPresenter) {
+        this.logInPresenter=logInPresenter;
         Map<String,String> jsonParams = new HashMap<>();
         jsonParams.put("msisdn",msisdn);
         jsonParams.put("password",password);
@@ -45,11 +48,12 @@ public class LogInModelImp  implements LogInModel{
         }
         RequestUrl request=new RequestUrl();
         request.setPath(finalUrl);
-        requestManager.makeHttpRequest(request);
+        System.out.println(requestManager);
+        requestManager.makeHttpRequest(request,this);
     }
 
     @Override
-    public void onSuccessFromNetWork(BaseBeen user) {
+    public void onSuccessFromNetWork(BaseBeenImp user) {
         logInPresenter.onSuccess((User) user);
     }
 

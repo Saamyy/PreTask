@@ -3,6 +3,7 @@ package models;
 import android.content.Context;
 
 import beans.Item;
+import presenters.UserDetailsPresenter;
 
 /**
  * Created by Mahmoud samy on 7/9/2017.
@@ -10,7 +11,7 @@ import beans.Item;
 
 public interface UserDetailsModel extends BaseModel {
 
-    public  void getProductsFromNetwork(String token,Context presenterContext);
+    public  void getProductsFromNetwork(String token, Context presenterContext, UserDetailsPresenter userDetailsPresenter);
 
 
 }

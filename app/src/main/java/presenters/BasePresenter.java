@@ -8,4 +8,5 @@ import beans.User;
 
 public interface BasePresenter {
     void onField(String msg);
+
 }

@@ -16,6 +16,8 @@ import com.example.mahmoudsamy.pretask.views.GlobaleClass;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.inject.Inject;
+
 import beans.BaseBeen;
 import beans.Item;
 import beans.RequestUrl;
@@ -29,23 +31,21 @@ public class RequestManagerImp implements RequestManager {
 
 
     private static final String url = "http://mvp-poc.getsandbox.com/";
+    @Inject
     ErrorLayer errorLayer;
-    BaseModel model;
-
-
-
-
-    public  RequestManagerImp(BaseModel logInModel)
+   // BaseModel model;
+    @Inject
+    public  RequestManagerImp()
     {
-        this.model=logInModel;
-        this.errorLayer=new ErrorHandler();
+     //   this.model=logInModel;
+        //this.errorLayer=new ErrorHandler();
 
     }
 
 
 
     @Override
-    public void makeHttpRequest(RequestUrl request) {
+    public void makeHttpRequest(RequestUrl request,BaseModel model) {
 
 
         RequestQueue queue = Volley.newRequestQueue(GlobaleClass.context);
@@ -59,15 +59,15 @@ public class RequestManagerImp implements RequestManager {
                             JSONObject jsonObject=new JSONObject(response.toString());
 
                             if (jsonObject.has("userType")) {
-                                BaseBeen<User> networkUser = new User();
-                                networkUser = new User().getObjectFromJsone(response.toString(),User.class);
-                                model.onSuccessFromNetWork((User)networkUser);
+                                //BaseBeen<User> networkUser = new User();
+                               // networkUser = new User().getObjectFromJsone(response.toString(),User.class);
+                                model.onSuccessFromNetWork(User.getUserFronJsone(response.toString()));
                             }
                             else if(jsonObject.has("items"))
                             {
-                                BaseBeen<Item> items=new Item();
-                                items=new Item().getObjectFromJsone(response.toString(),Item.class);
-                                model.onSuccessFromNetWork(items);
+                               // BaseBeen<Item> items=new Item();
+                               // items=new Item().getObjectFromJsone(response.toString(),Item.class);
+                                model.onSuccessFromNetWork(Item.getItemsFromJsone(response.toString()));
                             }
 
                         } catch (JSONException e) {

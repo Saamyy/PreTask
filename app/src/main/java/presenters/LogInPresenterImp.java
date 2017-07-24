@@ -3,26 +3,39 @@ package presenters;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import Dagger2.AppModule;
+import Dagger2.DaggerAppComponent;
+import Dagger2.ModelModule;
+import Dagger2.PresenterModule;
 import beans.User;
 import models.LogInModel;
 import models.LogInModelImp;
 
+import com.example.mahmoudsamy.pretask.views.BaseView;
 import com.example.mahmoudsamy.pretask.views.GlobaleClass;
 import com.example.mahmoudsamy.pretask.views.LogInView;
+
+import javax.inject.Inject;
 
 /**
  * Created by Mahmoud samy on 7/8/2017.
  */
 
 public class LogInPresenterImp implements LogInPresenter {
+
     LogInView logInView;
+
+    @Inject
     LogInModel logInModel;
-       public  LogInPresenterImp (LogInView logInView, Context context)
+
+    @Inject
+    public  LogInPresenterImp ()
     {
-        this.logInView=logInView;
-        this.logInModel=new LogInModelImp(this);
+
 
     }
+
+
     @Override
     public void validateCredentials(String msisdn, String password) {
         logInView.showProgress();
@@ -33,7 +46,7 @@ public class LogInPresenterImp implements LogInPresenter {
         }
         else
         {**/
-            logInModel.logIn(msisdn,password);
+            logInModel.logIn(msisdn,password,this);
        // }
 
     }
@@ -61,6 +74,11 @@ public class LogInPresenterImp implements LogInPresenter {
             logInView.killAchtivty();
         }
 
+    }
+
+    @Override
+    public void attach(LogInView baseView) {
+        this.logInView=baseView;
     }
 
     @Override

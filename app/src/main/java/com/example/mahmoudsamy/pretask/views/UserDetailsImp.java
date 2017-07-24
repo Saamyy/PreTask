@@ -9,10 +9,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.mahmoudsamy.pretask.R;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+
+import Dagger2.DaggerUserDetailsImpComponant;
+import Dagger2.DaggerUserDetailsPresenterImpComponant;
+import Dagger2.UserDetailsPresenterImpComponant;
 import beans.Item;
 import beans.User;
 import presenters.UserDetailsPresenter;
@@ -23,6 +29,7 @@ public class UserDetailsImp extends AppCompatActivity implements UserDetails {
     TextView userType;
     Button products;
     User user;
+    @Inject
     UserDetailsPresenter userDetailsPresenter;
     ProgressBar progressBar;
     Item items;
@@ -30,7 +37,8 @@ public class UserDetailsImp extends AppCompatActivity implements UserDetails {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userDetailsPresenter =new UserDetailsPresenterImp(this,this.getApplicationContext());
+     userDetailsPresenter = DaggerUserDetailsPresenterImpComponant.create().providesUserDetailsPresenterImp();
+        userDetailsPresenter.attach(this);
         setContentView(R.layout.activity_user_details);
         user=new User();
         items=new Item();

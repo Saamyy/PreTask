@@ -16,6 +16,11 @@ import android.widget.Toast;
 import com.example.mahmoudsamy.pretask.R;
 import com.google.gson.Gson;
 
+import javax.inject.Inject;
+
+import Dagger2.AppModule;
+import Dagger2.DaggerAppComponent;
+import Dagger2.PresenterModule;
 import beans.User;
 import presenters.LogInPresenter;
 import presenters.LogInPresenterImp;
@@ -25,7 +30,9 @@ public class ActivityLogin extends AppCompatActivity  implements LogInView{
     EditText msisdn;
     EditText passWord;
     Button logIn;
+    @Inject
     LogInPresenter logInPresenter;
+
     ProgressBar progressBar;
     User user;
     ProgressBarCustom progressBarCustom;
@@ -33,15 +40,21 @@ public class ActivityLogin extends AppCompatActivity  implements LogInView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        logInPresenter=new LogInPresenterImp(this,this.getApplicationContext());
+//        ((GlobaleClass)getApplication()).getAppComponent().inject(this);
+//        DaggerAppComponent.builder()
+//                .appModule(new AppModule(getApplication()))
+//                .presenterModule(new PresenterModule(this))
+//                .build().inject(this);
 
+       logInPresenter=DaggerAppComponent.create().provideLogInPresnterImp();
+        logInPresenter.attach(this);
         setContentView(R.layout.activity_login);
         logInPresenter.checkPerfrance();
         msisdn=(EditText) findViewById(R.id.msisdnEditText);
         passWord=(EditText) findViewById(R.id.passwordEditText);
         logIn=(Button) findViewById(R.id.loginButton);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-     //   progressBarCustom=new ProgressBarCustomImp(this.progressBar);
+       progressBarCustom=new ProgressBarCustomImp(this.progressBar);
 
         user=new User();
         logIn.setOnClickListener(new View.OnClickListener() {

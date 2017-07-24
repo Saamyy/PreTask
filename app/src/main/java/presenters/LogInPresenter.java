@@ -1,5 +1,8 @@
 package presenters;
 
+import com.example.mahmoudsamy.pretask.views.BaseView;
+import com.example.mahmoudsamy.pretask.views.LogInView;
+
 import beans.User;
 
 /**
@@ -11,5 +14,6 @@ public interface LogInPresenter extends BasePresenter {
     void validateCredentials(String msisdn, String password);
     void onSuccess(User user);
     void checkPerfrance();
+    void attach(LogInView baseView);
 
 }

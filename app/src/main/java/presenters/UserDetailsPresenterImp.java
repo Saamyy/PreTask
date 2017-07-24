@@ -2,7 +2,10 @@ package presenters;
 
 import android.content.Context;
 
+import com.example.mahmoudsamy.pretask.views.GlobaleClass;
 import com.example.mahmoudsamy.pretask.views.UserDetails;
+
+import javax.inject.Inject;
 
 import beans.Item;
 import beans.User;
@@ -15,16 +18,21 @@ import models.UserDetailsModelImp;
 
 public class UserDetailsPresenterImp   implements  UserDetailsPresenter{
     UserDetails userDetails;
+    @Inject
     UserDetailsModel userDetailsModel;
     Context context;
+    @Inject
+    public UserDetailsPresenterImp() {
 
-    public UserDetailsPresenterImp(UserDetails userDetails,Context context) {
-
-        this.userDetails = userDetails;
-        userDetailsModel=new UserDetailsModelImp(this);
-        this.context=context;
     }
 
+
+    @Override
+    public void attach(UserDetails userDetails) {
+        this.userDetails=userDetails;
+        this.context= GlobaleClass.context;
+
+    }
     @Override
     public void onField(String msg) {
 
@@ -57,7 +65,7 @@ public class UserDetailsPresenterImp   implements  UserDetailsPresenter{
     @Override
     public void getItems(String token) {
         userDetails.showProgress();
-        userDetailsModel.getProductsFromNetwork(token,this.context);
+        userDetailsModel.getProductsFromNetwork(token,this.context,this);
 
     }
 

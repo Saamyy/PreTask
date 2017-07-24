@@ -1,5 +1,6 @@
 package models;
 
+import beans.BaseBeen;
 import beans.RequestUrl;
 
 /**
@@ -10,7 +11,7 @@ public interface RequestManager {
 
 
 
-    public  void makeHttpRequest(RequestUrl request);
+    public  void makeHttpRequest(RequestUrl request,BaseModel model);
 
 
 }

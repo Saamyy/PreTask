@@ -2,6 +2,7 @@ package models;
 
 import beans.BaseBeen;
 import beans.BaseBeenImp;
+import presenters.LogInPresenter;
 
 /**
  * Created by Mahmoud samy on 7/9/2017.
@@ -10,5 +11,5 @@ import beans.BaseBeenImp;
 public interface BaseModel {
 
     public void onFaildFromNetwork(String msg);
-    public  void onSuccessFromNetWork(BaseBeen object);
+    public  void onSuccessFromNetWork(BaseBeenImp object);
 }

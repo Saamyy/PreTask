@@ -10,14 +10,11 @@ import com.google.gson.Gson;
  */
 
 public interface BaseBeen<T> {
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    default   <T extends BaseBeen> T getObjectFromJsone(String serverRespond,Class<T> Klass)
-    {
-        T object;
-        Gson gson= new Gson();
-        object=gson.fromJson(serverRespond,Klass);
-        return  object;
-
-    }
-
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    default <T extends BaseBeen> T getObjectFromJsone(String serverRespond, Class<T> Klass) {
+//        T object;
+//        Gson gson = new Gson();
+//        object = gson.fromJson(serverRespond, Klass);
+//        return object;
+//    }
 }
